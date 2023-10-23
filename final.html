@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final project</title>
+
+  <!-- UIkit -->
+  <link type="text/css" rel="stylesheet" href="js/uikit-3.15.14/css/uikit.min.css"/>
+  <script type="text/javascript" src="js/uikit-3.15.14/js/uikit.min.js"></script>
+  <script src="js/uikit-3.15.14/js/uikit-icons.min.js"></script>
+  <!--eCharts V5-->
+  <script src="js/echarts.min.js"></script>
+  <!-- jQuery -->
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <!--scroll-->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/scrollama@2.2.0/build/scrollama.min.js"></script>
+  <link rel="stylesheet" href="js/style.css"/>
+
+  <!-- Map -->
+  <script src="map.js"></script>
+  <style media="screen">
+
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .uk-container{
+    max-width: 100%;
+  }
+
+  .header {
+    width: 100%;
+    height: 100vh;
+    background: url(./f.jpg) no-repeat;
+    background-size: cover;
+  }
+
+  .footer {
+    height: 120px;
+    background-color: #f1f1f1;
+    position: relative;
+    margin-top: 75px;
+  }
+
+  /*mhart*/
+  #chart_1 {
+    height: 600px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .chart-container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .note-container {
+    max-width: 60%;
+    margin: auto;
+  }
+
+  /*map scroll*/
+  #map-container {
+    width: 66.66%;
+    height: 100vh;
+    float: right;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+  }
+
+  #map-container object {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+  }
+
+  #scrolly {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #f3f3f3;
+    padding: 1rem;
+  }
+
+  #scrolly > * {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+
+  article {
+    position: relative;
+    padding: 0 1rem;
+    max-width: 35%;
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    background-color: #8a8a8a;
+  }
+
+  figure h3 {
+    text-align: center;
+    padding: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    font-weight: 900;
+    color: #FFFFFF;
+  }
+
+  figure p {
+    padding: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: 900;
+    color: #FFFFFF;
+  }
+
+  .step {
+    margin: 0 auto 2rem auto;
+    background-color: #C9C0B4;
+    color: #595959;
+    z-index: 1;
+    transform: translateZ(0)
+  }
+
+  .step.is-active {
+    background-color: #DFD8CB;
+    color: #3b3b3b;
+  }
+
+  .step:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+
+  main {
+    margin-bottom: -630px;
+    margin-top: -250px;
+  }
+
+  h2 {
+    text-align: left;
+    padding: 1rem;
+    font-size: 2rem;
+
+  }
+
+  p {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 1024px) {
+    .chart-container {
+      flex-direction: column;
+    }
+    .chart-container,
+    .note-container {
+      align-items: center;
+    }
+    .note-container {
+      margin-top: 5px;
+    }
+  }
+
+  </style>
+</head>
+
+<body>
+  <!--Header-->
+  <div class="uk-cover-container uk-height-viewport uk-animation-fade uk-text-center">
+    <div class="uk-inline uk-transition-toggle" tabindex="0">
+      <img src="image/f.jpg" width="1800" height="1200" alt="" class="uk-transition-scale-up uk-transition-opaque">
+      <div class="uk-position-center uk-transition-slide-top">
+        <div class="uk-overlay uk-overlay-default">
+          <h2 class="uk-margin-remove">Taiwan's Diplomatic Dilemma</h2>
+          <p class="uk-margin-remove">Navigating challenges and future amidst severed relations</p>
+          <a href="#start" uk-scroll uk-icon="chevron-down"><span uk-icon="chevron-down; ratio: 2"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Navbar-->
+  <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent; show-on-up: true">
+    <nav class="uk-navbar-container" uk-navbar >
+      <div class="uk-navbar-left ">
+        <ul class="uk-navbar-nav">
+          <li><a href="#start" uk-scroll="offset: 75;">Introduction</a></li>
+          <li><a href="#section1" uk-scroll="offset: 75;">Map</a></li>
+          <li><a href="#section2" uk-scroll="offset: 75;">History</a></li>
+          <li><a href="#section3" uk-scroll="offset: 75;">Challenges</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!--Intro-->
+  <div class="uk-section uk-section-muted uk-width-4-5@m uk-align-center">
+    <div class="uk-container">
+      <p id="start">With its complex political status, Taiwan (as known as the <strong>Republic of China, ROC</strong>) is facing a growing diplomatic predicament as its global alliances continue to decline. The recent termination of diplomatic ties with Honduras in March this year marks the ninth ally lost since President Tsai Ing-wen assumed office, underscoring the challenges that Taiwan encounters in maintaining international recognition.</p>
+    </div>
+    <div class="uk-text-left uk-margin-left uk-margin-right" uk-grid>
+      <div class="uk-margin-right uk-width-expand@m">
+        <blockquote class="twitter-tweet"><p lang="es" dir="ltr">📌| COMUNICADO: Honduras Anuncia Ruptura de Relaciones Diplomáticas con Taiwán <a href="https://t.co/kaaBearpcM">pic.twitter.com/kaaBearpcM</a></p>&mdash; Cancillería Honduras (@CancilleriaHN) <a href="https://twitter.com/CancilleriaHN/status/1639779225828831232?ref_src=twsrc%5Etfw">March 26, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div class="uk-margin-right uk-margin-large-top uk-width-1-2@m" uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 800; repeat: true">
+        <div class="uk-card uk-card-default uk-card-body">
+          <p>Honduras stated that it recognises only one China, represented by the government of the <strong>People's Republic of China (PRC)</strong>, and considers Taiwan an inalienable part of Chinese territory, severing all official relations and contacts with Taiwan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="uk-container">
+      <p>The historical and political background of the Beijing-Taiwan dispute dates back to the civil war split in 1949. Both Beijing and Taiwan have been vying for diplomatic recognition as the sole legitimate government representing China.</p>
+      <p>The withdrawal of the ROC from the United Nations in 1970 and the subsequent recognition of the PRC as the legitimate representative of China have significantly marginalised Taiwan's presence on the international stage.</p>
+      <div class="uk-width-3-5@m chart-container uk-margin-top uk-margin-bottom">
+        <div id="chart_1"></div>
+      </div>
+      <div class="note-container uk-flex">
+        <p class="uk-text-meta">
+          *1949: The ROC government lost China proper to the Communists in a civil war and relocated to Taiwan. Same year, People's Republic of China (PRC) established.
+        </p>
+      </div>
+      <div class="note-container uk-flex">
+        <p class="uk-text-meta">
+          *1971: ROC was formally expelled from the UN by a <a href="https://web-archive-2017.ait.org.tw/en/un-res-2758-voted-to-admit-communist-china.html" target="_blank" class="uk-text-small uk-text-muted">vote</a> of the UN General Assembly and replaced by PRC.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!--Map scroll-->
+  <main>
+    <section id="intro">
+    </section>
+    <section id="scrolly" class="uk-container uk-width-4-5@m uk-align-center">
+      <article>
+        <div id="country-name"></div>
+        <div class="step" data-step="1" id="section1">
+          <h3>ROC or PRC?</h3>
+          <p>Since President Tsai Ing-wen first took office in 2016, Taiwan's formal diplomatic ties have witnessed a decline, with the number of countries maintaining such relations decreasing from 22.</p>
+          <p>Countries that have severed diplomatic ties with Taiwan are São Tomé and Príncipe, Panama, Dominica, Burkina Faso, El Salvador, Solomon Islands, Kiribati, Nicaragua, and Honduras.</p>
+          <p>The shift of countries towards recognising Beijing goes beyond the acknowledgment of either the ROC or the PRC as the legitimate government of "China." This change carries significant implications for national interests and highlights the complexity of Taiwan's diplomatic dilemma.</p>
+          <p>The Director of the Lau China Institute at King's College London, Kerry Brown, sheds light on the challenges faced by countries recognising Taiwan. He notes that it's a big sacrifice for them, “if you commit to Taiwan, obviously, you're not going to have much trading or economic relationship with China.”</p>
+          <p>Under Xi Jinping's leadership, Beijing's behaviour, particularly since Tsai Ing-wen assumed the presidency, has resulted in an overall Chinese diplomatic strategy aimed at isolating Taiwan and limiting its international space, says Professor Brown.</p>
+          <p>He further explains that Beijing's foreign policy typically operates on broad principles rather than specific directives. In the case of Taiwan, the overarching principle is to isolate it from multilateral organisations to curb its influence.</p>
+        </div>
+        <div class="step" data-step="2">
+          <h3>Reasons behind</h3>
+          <p>Apart from China's campaign to isolate Taiwan, Professor Brown highlights the increasing commercialisation of Beijing's aid, which is closely intertwined with political objectives.</p>
+          <p>He emphasises that aid serves as a political tool, and China is unlikely to provide aid to countries that do not align with its political beliefs. This means that recognising Taiwan comes with a high opportunity cost.</p>
+          <p>China's technological advancements also play a crucial role in countries' decisions to align with it. Developing nations seeking access to advanced technology often favour closer ties with China.</p>
+          <p>While Taiwan can offer assistance in certain areas, countries must carefully consider the broader implications of their relationship, particularly regarding China's influence in the Asia-Pacific, Africa, and Latin America.</p>
+          <p>Professor Brown underscores that countries primarily recognise each other based on self-interest rather than charity.</p>
+          <p>Recognising Taiwan involves navigating complex political dynamics and potential patron-client relationships. Thus, he points out that most countries would rather bear the cost of not recognising Taiwan than engage in such a relationship.</p>
+        </div>
+        <div class="step" data-step="3">
+          <h3>Long-term strategies</h3>
+          <p>Addressing these challenges requires a long-term approach. Professor Brown suggests that Taiwan should focus on creating legitimate economic opportunities, leveraging its dominant position in the semiconductor industry, for instance.</p>
+          <p>In the meantime, Taiwan should continue engaging with Beijing, recognising the potential for future changes that could reshape the relationship. Strengthening democracy and maintaining informal diplomatic ties with countries like the US and Europe is also vital for Taiwan's future.</p>
+          <p>While Taiwan's relationship with the US exhibits aspects of a partnership, Professor Brown argues that it has not yet reached the level of a formal alliance. The ambiguity surrounding the United States' obligations to Taiwan in the event of a conflict prevents categorising the two countries as allies. Nonetheless, the partnership remains significant as it defines the level of support Taiwan can receive from the US.</p>
+          <p>Currently, Taiwan is left with only 13 official diplomatic allies, including the Vatican, Paraguay, Eswatini, Belize, Guatemala, and several island nations in the Caribbean and South Pacific. This serves as a stark reminder that diplomatic setbacks are a pressing issue that the Taiwanese government must address with utmost seriousness.</p>
+      </article>
+
+      <div id="map-container">
+        <object id="map-svg" type="image/svg+xml" data="world.svg"></object>
+      </div>
+    </section>
+
+    <section id="outro"></section>
+  </main>
+
+  <!--History-->
+  <div class="uk-section uk-section-muted uk-width-4-5@m uk-align-center">
+    <div class="uk-container">
+      <h2 id="section2">History</h2>
+      <p>Given the unique political and historical circumstances, negotiations between the two sides have involved political arguments. The <strong>1992 Consensus</strong><a href="#modal-center" uk-toggle class="uk-text-small uk-text-muted"> 1</a> aimed to establish a tacit agreement. However, the lacking of clarity on whether "China" refers to ROC or PRC.</p>
+      <div id="modal-center" class="uk-flex-top" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <p><a href="https://en.wikipedia.org/wiki/1992_Consensus" target="_blank" class="uk-text-small uk-text-muted">The 1992 Consensus</a> implies that both have implicitly agreed upon the core principle of one China while there is no conclusive determination regarding which entity, the ROC or the PRC, embodies this "China".</p>
+          <p>The interpretation by the then Taiwan government was "One China with respective interpretations" (see the explanation below) while Beijing interpreted it as both sides adhering to the principle of one China and working towards national unification, without delving into the political implications of the "one China" concept in cross-strait affairs negotiations.</p>
+        </div>
+      </div>
+      <p>Such ambiguity has led to persistent cognitive differences. Neither the concept of <strong>One China with respective interpretations</strong><a href="#modal-center-1" uk-toggle class="uk-text-small uk-text-muted"> 2</a>
+        nor the principle of <strong>One country, two systems</strong><a href="#modal-center-2" uk-toggle class="uk-text-small uk-text-muted"> 3</a>  can be considered acceptable or fully comprehensive in defining the relationship between the two sides.</p>
+        <div id="modal-center-1" class="uk-flex-top" uk-modal>
+          <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <p><a href="https://en.wikipedia.org/wiki/One_China" target="_blank" class="uk-text-small uk-text-muted">One China with respective interpretations</a> refers to the interpretation of by the ROC's then-governing political party that both governments agree that there is one "China", but whether this "China" means the ROC or the PRC is disagreed.
+            </p>
+          </div>
+        </div>
+        <div id="modal-center-2" class="uk-flex-top" uk-modal>
+          <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <p><a href="https://en.wikipedia.org/wiki/One_country,_two_systems" target="_blank" class="uk-text-small uk-text-muted">One China, two systems</a> advocates for the existence of one China and the PRC government is the only legitimate governing body representing China internationally. Taiwan, Hong Kong and Macau are inseparable parts of China.</a>
+            </p>
+          </div>
+        </div>
+        <p>Beijing has explicitly stated that the severance or non-establishment of diplomatic relations with Taiwan authorities is a principle on which the new China establishes diplomatic ties with foreign countries. Consequently, it has limited contact with nations that maintain formal diplomatic relations with Taiwan.</p>
+        <p>It’s worth noting that although the One China policy is generally accepted by the international community, some countries with formal diplomatic relations with Beijing only acknowledge China's claim over Taiwan without extending formal recognition. <a href="https://www.theguardian.com/world/2023/mar/26/honduras-says-there-is-only-one-china-as-it-officially-cuts-ties-with-taiwan" target="_blank" class="uk-text-small uk-text-muted">4</a></p>
+        <div class="uk-animation-fade">
+          <div class="uk-inline-clip uk-transition-toggle" tabindex="0">
+            <img src="image/flag2.jpg" alt="" class="uk-transition-scale-up uk-transition-opaque uk-transform-origin-bottom-top-center">
+          </div>
+        </div>
+
+      <!--Challenges-->
+        <h2 id="section3" class="uk-margin-top">Challenges and Future</h2>
+        <p>In view of navigating a complex international landscape shaped by Beijing's pressure and evolving global dynamics, strengthening existing diplomatic relations while actively seeking new partnerships is important for Taiwan to maintain its international presence and ensure its voice is heard on the global stage.</p>
+        <p>Taiwan has taken various measures to bolster its diplomatic presence, sought to deepen economic and cultural exchanges with other nations, and actively participated in international organisations that do not require formal statehood recognition in response to China's diplomatic isolation efforts.</p>
+        <p>In recent years, numerous political figures from Europe and the US have visited Taiwan. These visits have sparked extensive discussions in Taiwan and have resulted in closer cross-strait relations. However, Professor Liu asserts that these visits have not brought significant assistance or substantial political influence.</p>
+        <div class="uk-child-width-1-2@s uk-margin-top uk-margin-bottom" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+              <a href="https://en.mofa.gov.tw/News_Content.aspx?n=1328&s=114647" target="_blank" rel="noopener noreferrer"><img src="image/Liz.jpg"></a>
+              <p>Former British Prime Minister Liz Truss visted Tawian in May 2023.</p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+              <a href="https://www.taipeitimes.com/News/taiwan/archives/2022/03/03/2003774111" target="_blank" rel="noopener noreferrer"><img src="image/Mike.jpg"></a>
+              <p>Former US secretary of state Mike Pompeo's visit to Taiwan in 2022.</p>
+            </div>
+          </div>
+        </div>
+        <p>Professor Liu points out that many people tend to ignore or underestimate the significance of severing diplomatic allies. However, diplomatic relations hold great symbolic importance for Taiwan as they represent recognition and sovereignty. The consecutive loss presents a challenge to Taiwan's international status.</p>
+        <p>Regarding the future of Taiwan's diplomatic relations, Professor Brown suggests that the number of diplomatic allies will continue to decrease, although it will be a gradual process.</p>
+        <p>The Vatican poses a particular challenge as the only European ally of Taiwan. Given the unique circumstances and the fact that the Catholic Church is not recognised in China, it's difficult to envision how the Vatican would recognise China. Professor Brown deems such a scenario incoherent and difficult. Nevertheless, it remains a possibility for other countries.</p>
+        <p>As Professor Brown previouly noted, Beijing's approach to development aid is heavily commercialised. Professor Liu further reminds us that Taiwan cannot simply rely on donations for effective cooperation and growth in terms of foreign aid.</p>
+        <p>Overall, the loss of diplomatic relations not only has symbolic implications but can also impact Taiwan's international image and development. Therefore, Taiwan needs to reassess its diplomatic strategy, strengthen cooperation with different regions, and foster more substantial diplomatic relations to navigate the diplomatic challenges posed by China's mounting pressure.</p>
+      </div>
+    </div>
+
+
+    <!--Footer-->
+  <div class="uk-container uk-width-3-5@m uk-margin-medium-top uk-margin-large-bottom">
+    <p class="uk-text-small uk-text-center">Designed by Hsin Pai © Copyright 2023</p>
+    <br>
+  </div>
+
+
+
+
+    <!--scroll script-->
+    <script>
+    function initScrollama() {
+
+      const main = d3.select("main");
+      const scrolly = main.select("#scrolly");
+      const figure = scrolly.select("figure");
+      const article = scrolly.select("article");
+      const step = article.selectAll(".step");
+
+      function handleStepEnter(response) {
+        console.log(response);
+
+        step.classed("is-active", function (d, i) {
+          return i === response.index;
+        });
+
+        figure.select("p").text(response.index + 1);
+
+        const cutoffCountries = ["ST", "PA", "DM", "BF", "SV", "SB", "KI", "NI", "HN"];
+        const remainingCountries = ["MH", "NR", "PW", "TV", "SZ", "VA", "BZ", "GT", "HT", "PY", "KN", "LC", "VC"];
+
+        if (response.index === 0) {
+          d3.select("#map-svg")
+          .selectAll("path")
+          .attr("fill", "#547794")
+          .attr("stroke", "#547794");
+        } else if (response.index === 1) {
+          d3.select("#map-svg")
+          .selectAll("path")
+          .attr("fill", function (d) {
+            return cutoffCountries.includes(d.id) ? "#CD314C" : "#547794";
+          })
+          .attr("stroke", function (d) {
+            return cutoffCountries.includes(d.id) ? "#CD314C" : "#547794";
+          });
+        } else if (response.index === 2) {
+          d3.select("#map-svg")
+          .selectAll("path")
+          .attr("fill", function (d) {
+            return remainingCountries.includes(d.id) ? "#2F404F" : "#CD314C";
+          })
+          .attr("stroke", function (d) {
+            return remainingCountries.includes(d.id) ? "#2F404F" : "#CD314C";
+          });
+        }
+      }
+
+      const scroller = scrollama();
+      scroller
+      .setup({
+        step: "#scrolly article .step",
+        offset: 0.33,
+        debug: false,
+      })
+      .onStepEnter(handleStepEnter);
+    }
+
+    initScrollama();
+  </script>
+
+
+  <!--chart script-->
+  <script>
+  let chartOne = echarts.init(document.getElementById('chart_1'));
+
+  const currentPath = window.location.pathname;
+  const rootPath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+  const dataUrl = rootPath + 'data/chart.json';
+
+  function fetchData() {
+    return fetch(dataUrl)
+    .then(response => response.json());
+  }
+
+  function run(_rawData) {
+    const countries = ['Taiwan', 'China'];
+    const datasetWithFilters = [];
+    const seriesList = [];
+
+    const lineColors = ['#547794', '#CD314C'];
+
+    for (let i = 0; i < countries.length; i++) {
+      const country = countries[i];
+      const datasetId = 'dataset_' + country;
+
+      datasetWithFilters.push({
+        id: datasetId,
+        fromDatasetId: 'dataset_raw',
+        transform: {
+          type: 'filter',
+          config: {
+            and: [
+              { dimension: 'Year', gte: 1949 },
+              { dimension: 'Country', '=': country }
+            ]
+          }
+        }
+      });
+
+      seriesList.push({
+        type: 'line',
+        datasetId: datasetId,
+        showSymbol: false,
+        name: country,
+        itemStyle: {
+          color: lineColors[i % lineColors.length]
+        },
+        labelLayout: {
+          moveOverlap: 'shiftY'
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        encode: {
+          x: 'Year',
+          y: 'Number',
+          itemName: 'Year',
+          tooltip: ['Number']
+        }
+      });
+    }
+
+    const option = {
+      animationDuration: 3000,
+      dataset: [
+        {
+          id: 'dataset_raw',
+          source: _rawData
+        },
+        ...datasetWithFilters
+      ],
+      title: {
+        text: 'Diplomatic allies of Taiwan (ROC) and China (PRC) since 1949'
+      },
+      tooltip: {
+        order: 'valueDesc',
+        trigger: 'axis'
+      },
+      xAxis: {
+        type: 'category',
+        nameLocation: 'middle'
+      },
+      yAxis: {
+        name: 'Number'
+      },
+      grid: {
+        right: 140
+      },
+      series: seriesList
+    };
+
+    chartOne.setOption(option);
+  }
+
+  function refreshChart() {
+    fetchData()
+    .then(data => {
+      chartOne.clear();
+      run(data);
+    })
+    .catch(error => console.error('Error:', error));
+  }
+
+  setInterval(refreshChart, 8000);
+
+  window.onresize = function () {
+    chartOne.resize();
+  }
+
+  fetchData()
+  .then(data => {
+    run(data);
+  })
+  .catch(error => console.error('Error:', error));
+</script>
+</body>
+</html>
