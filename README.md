@@ -30,7 +30,7 @@ This project encapsulates a multi-faceted exploration of data journalism, data p
 
 ## Project Details
 
-This project showcases proficiency in the end-to-end data journalism process — from discovering news clues and conducting interviews to data wrangling and crafting insightful articles with data-driven visualizations.
+This project showcases proficiency in the end-to-end data journalism process — from discovering news clues and conducting interviews to data wrangling and crafting insightful articles with data-driven visualisations.
 
 ## License
 
