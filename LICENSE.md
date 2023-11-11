@@ -16,6 +16,8 @@ This code is made available for limited use under the following terms and condit
 
 6. **No License Grant:** No license, express or implied, is granted for any use of this code beyond the permissions explicitly stated in this license.
 
+**Unauthorised Use:** Unauthorised use, reproduction, or distribution of this code, in whole or in part, without the written permission of Hsin Pai is strictly prohibited.
+
 By viewing or otherwise accessing this code, you agree to abide by these terms and conditions.
 
 © Hsin Pai, 2023. All Rights Reserved.
