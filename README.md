@@ -36,4 +36,8 @@ This project showcases proficiency in the end-to-end data journalism process —
 
 This project is licensed under the [LICENSE.md](LICENSE.md) - see the [LICENSE.md](LICENSE.md) file for details.
 
+The code and associated files in the "work 1" project are the intellectual property of Hsin Pai. All rights are reserved by the copyright holder. This code is intended for the exclusive viewing of potential employers to assess the coding and analytical skills of Hsin Pai.
+
+Unauthorised use, reproduction, or distribution of this code, in whole or in part, without the written permission of Hsin Pai is strictly prohibited.
+
 © Hsin Pai, 2023
