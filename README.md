@@ -20,13 +20,13 @@ This project encapsulates a multi-faceted exploration of data journalism, data p
 - **Tools Used:**
   - R
   - Excel
-  - HTML
-  - CSS
-  - JavaScript
   - D3.js
   - Scrollama
   - eCharts
   - jQuery
+  - HTML
+  - CSS
+  - JavaScript
 
 ## Project Details
 
